@@ -7,6 +7,6 @@ api = Api(app)
 api.add_resource(Aapi, "/api/<int:id>")
 @app.route("/")
 def home():
-    return render_template("htmlss.html", content="Testing", x=4)
+    return render_template("test.html", content="Testing", x=4)
 if __name__ == "__main__":
   app.run()
