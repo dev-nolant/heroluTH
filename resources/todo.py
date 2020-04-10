@@ -1,6 +1,6 @@
 from flask_restful import Resource
 import json
-with open('C:\\Users\\nolan\\Documents\\Treasure hunt\\resources\\test.json', 'r') as f:
+with open(r'C:\\Users\\nolan\Documents\\Treasure hunt\\resources\\test.json', 'r') as f:
     distros_dict = json.load(f)
 todos = [
   {
