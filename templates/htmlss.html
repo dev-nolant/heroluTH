@@ -5,14 +5,10 @@
         background-image: url('https://cutewallpaper.org/21/1920-x-1080-gif/Gifart-Lo-Fi-Wallpapers-Top-Free-Gifart-Lo-Fi-Backgrounds-.gif');
         background-size: cover;
         background-repeat: no-repeat;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        margin-top: -560px;
-        margin-left: -100px;
-        pointer-events: none;
-        transform-origin: center;
-        overflow: hidden; /* Hide scrollbars */
+
+        height: 100vh;
+        padding: 0;
+        margin: 0;
     }
 
     .disable-select {
@@ -40,14 +36,14 @@
         margin-left: -130px;
         pointer-events: none;
         transform-origin: center;
-        display:block;
+        display: block;
     }
 
     .music-chrome {
         color: rgba(0, 0, 0, 0);
         width: 0;
         height: 0;
-        display:none    
+        display: none
     }
 </style>
 </div>
@@ -96,8 +92,10 @@
             };
         </script>
         <div3 class="centertime">
-            <iframe src="http://free.timeanddate.com/clock/i78i0wu9/n398/fn12/fs36/fcfff/tct/pct/ftb/tt0/tw0/tm1/ts1/ta1/tb4" frameborder="0" width="270" height="74" align="right" allowTransparency="true"></iframe>
-                
+            <iframe
+                src="http://free.timeanddate.com/clock/i78i0wu9/n398/fn12/fs36/fcfff/tct/pct/ftb/tt0/tw0/tm1/ts1/ta1/tb4"
+                frameborder="0" width="270" height="74" align="right" allowTransparency="true"></iframe>
+
         </div3>
     </body>
     <audio controls autoplay style="display:none">
@@ -105,6 +103,69 @@
         <source src="111.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/rA56B4JyTgI?rel=0&autoplay=1&raw=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    
-</html>
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/rA56B4JyTgI?rel=0&autoplay=1&raw=1" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <html>
+
+    <body style='font-size:40px'>
+        <div id=lockeddiv style='font-style:italic'></div>
+        <div id=messagediv style='font-style:italic'>Tap for music.</div>
+        <script>
+            var music = new Audio("http://curtastic.com/nightmare.mp3")
+            var chime = new Audio("http://curtastic.com/gold.wav")
+            var nothing = new Audio("http://touchbasicapp.com/nothing.wav")
+            var allAudio = []
+            allAudio.push(music)
+            allAudio.push(chime)
+            
+            var tapped = function() {
+            messagediv.innerHTML = "tapped"
+            
+            // Play all audio files on the first tap and stop them immediately.
+                if (allAudio) {
+                    for (var audio of allAudio) {
+                        audio.play()
+                        audio.pause()
+                        audio.currentTime = 0
+                    }
+                    allAudio = null
+                }
+
+                // We should be able to play music delayed now (not during the tap event).
+                messagediv.innerHTML = "Music starts in 2 seconds…"
+                setTimeout(function () {
+                    messagediv.innerHTML = "Music playing. <button onclick='stop()'>Stop</button>"
+                    music.play()
+                }, 2000)
+
+            }
+            document.body.addEventListener('touchstart', tapped, false)
+            document.body.addEventListener('click', tapped, false)
+
+            var stop = function () {
+                music.pause()
+                loop = null
+                document.body.removeEventListener('touchstart', tapped, false)
+                document.body.removeEventListener('click', tapped, false)
+            }
+
+            // Check if audio starts already unlocked by playing a blank wav.
+            nothing.play().then(function () {
+                lockeddiv.innerHTML = "Audio started unlocked!"
+            }).catch(function () {
+                lockeddiv.innerHTML = "Audio started locked :("
+            })
+
+            var loop = function () {
+                // Try to play chimes whenever we want (not during user action).
+                if (Math.random() < .01) {
+                    chime.play().then(function () {
+                        lockeddiv.innerHTML = "Audio is now unlocked!"
+                    })
+                }
+                setTimeout(loop, 16)
+            }
+            loop()
+        </script>
+
+    </html>
