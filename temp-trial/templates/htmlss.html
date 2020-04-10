@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false">
+<style>
+    body {
+        background-image: url('https://cutewallpaper.org/21/1920-x-1080-gif/Gifart-Lo-Fi-Wallpapers-Top-Free-Gifart-Lo-Fi-Backgrounds-.gif');
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+
+    .disable-select {
+        user-select: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    div2 {
+        color: #000;
+        color: rgba(0, 0, 0, 0);
+
+        font-size: 16pt;
+        font-family: Arial, sans-serif;
+
+    }
+
+    .centertime {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -100px;
+        pointer-events: none;
+    }
+
+    .music-chrome {
+        color: rgba(0, 0, 0, 0);
+        width: 0;
+        height: 0;
+        display:none    
+    }
+</style>
+</div>
+<div class="disable-select">
+
+    <body>
+        <div2>
+            <p>Hellos</p>
+        </div2>
+        <p id="plotting"></p>
+        <script language="JavaScript">
+            window.onload = function () {
+                document.addEventListener("contextmenu", function (e) {
+                    e.preventDefault();
+                }, false);
+                document.addEventListener("keydown", function (e) {
+
+                    if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                        disabledEvent(e);
+                    }
+                    if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                        disabledEvent(e);
+                    }
+
+                    if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                        disabledEvent(e);
+                    }
+
+                    if (e.ctrlKey && e.keyCode == 85) {
+                        disabledEvent(e);
+                    }
+
+                    if (event.keyCode == 123) {
+                        disabledEvent(e);
+                    }
+                }, false);
+                function disabledEvent(e) {
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    } else if (window.event) {
+                        window.event.cancelBubble = true;
+                    }
+                    e.preventDefault();
+                    return false;
+                }
+            };
+        </script>
+        <div3 class="centertime">
+            <iframe src="http://free.timeanddate.com/clock/i78i0wu9/n398/fn2/fs34/fcfff/tct/pct/tt0/tw0/tm1/ts1/tb4"
+                frameborder="0" width="248" height="98" allowTransparency="true"></iframe>
+        </div3>
+    </body>
+    <audio controls autoplay style="display:none">
+        <source src="111.ogg" type="audio/ogg">
+        <source src="111.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/rA56B4JyTgI?rel=0&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+</html>
