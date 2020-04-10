@@ -1,10 +1,10 @@
 from flask import Flask, redirect, url_for, render_template
 from flask_restful import Api
-from resources.todo import Todo
+from resources.todo import Api
 app = Flask(__name__)
 api = Api(app)
 
-api.add_resource(Todo, "/todo/<int:id>")
+api.add_resource(Api, "/api/<int:id>")
 @app.route("/")
 def home():
     return render_template("htmlss.html", content="Testing", x=4)
