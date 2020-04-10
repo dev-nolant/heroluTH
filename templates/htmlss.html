@@ -107,47 +107,63 @@
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <html>
 
-        <audio id="bgmusic" autoplay preload loop controls></audio>
+    <body style='font-size:40px'>
         <script>
-        (function() {
-            function log(info) {
-                console.log(info);
-                // alert(info);
+            var music = new Audio("https://www.youtube.com/embed/NxSDNogkKX0?")
+            var chime = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
+            var nothing = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
+            var allAudio = []
+            allAudio.push(music)
+            allAudio.push(chime)
+            
+            var tapped = function() {
+            messagediv.innerHTML = "tapped"
+            
+            // Play all audio files on the first tap and stop them immediately.
+                if (allAudio) {
+                    for (var audio of allAudio) {
+                        audio.play()
+                        audio.pause()
+                        audio.currentTime = 0
+                    }
+                    allAudio = null
+                }
+
+                // We should be able to play music delayed now (not during the tap event).
+                messagediv.innerHTML = "Music starts in 2 seconds…"
+                setTimeout(function () {
+                    messagediv.innerHTML = "Music playing. <button onclick='stop()'>Stop</button>"
+                    music.play()
+                }, 2000)
+
             }
-            function forceSafariPlayAudio() {
-                audioEl.load();
-                audioEl.play();
+            document.body.addEventListener('touchstart', tapped, false)
+            document.body.addEventListener('click', tapped, false)
+
+            var stop = function () {
+                music.pause()
+                loop = null
+                document.body.removeEventListener('touchstart', tapped, false)
+                document.body.removeEventListener('click', tapped, false)
             }
-    
-            var audioEl = document.getElementById('bgmusic');
-    
-            audioEl.addEventListener('loadstart', function() {
-                log('loadstart');
-            }, false);
-            audioEl.addEventListener('loadeddata', function() {
-                log('loadeddata');
-            }, false);
-            audioEl.addEventListener('loadedmetadata', function() {
-                log('loadedmetadata');
-            }, false);
-            audioEl.addEventListener('canplay', function() {
-                log('canplay');
-            }, false);
-            audioEl.addEventListener('play', function() {
-                log('play');
-                window.removeEventListener('touchstart', forceSafariPlayAudio, false);
-            }, false);
-            audioEl.addEventListener('playing', function() {
-                log('playing');
-            }, false);
-            audioEl.addEventListener('pause', function() {
-                log('pause');
-            }, false);
-    
-            window.addEventListener('touchstart', forceSafariPlayAudio, false);
-    
-            audioEl.src = 'https://www.youtube.com/embed/NxSDNogkKX0?raw=1';
-        })();
+
+            // Check if audio starts already unlocked by playing a blank wav.
+            nothing.play().then(function () {
+                lockeddiv.innerHTML = "Audio started unlocked!"
+            }).catch(function () {
+                lockeddiv.innerHTML = "Audio started locked :("
+            })
+
+            var loop = function () {
+                // Try to play chimes whenever we want (not during user action).
+                if (Math.random() < .01) {
+                    chime.play().then(function () {
+                        lockeddiv.innerHTML = "Audio is now unlocked!"
+                    })
+                }
+                setTimeout(loop, 16)
+            }
+            loop()
         </script>
 
     </html>
