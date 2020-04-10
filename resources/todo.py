@@ -1,5 +1,7 @@
 from flask_restful import Resource
-import test
+import JSON
+with open('test.json', 'r') as f:
+    distros_dict = json.load(f)
 todos = [
   {
     "id": 133244223123,
