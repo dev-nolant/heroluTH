@@ -50,6 +50,65 @@
 <div class="disable-select">
 
     <body>
+        <div id=lockeddiv style='font-style:italic'></div>
+    <div id=messagediv style='font-style:italic'></div>
+    <script>
+        var music = new Audio("https://www.youtube.com/embed/NxSDNogkKX0?")
+        var chime = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
+        var nothing = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
+        var allAudio = []
+        allAudio.push(music)
+        allAudio.push(chime)
+        
+        var tapped = function() {
+        messagediv.innerHTML = "tapped"
+        
+        // Play all audio files on the first tap and stop them immediately.
+            if (allAudio) {
+                for (var audio of allAudio) {
+                    audio.play()
+                    audio.pause()
+                    audio.currentTime = 0
+                }
+                allAudio = null
+            }
+
+            // We should be able to play music delayed now (not during the tap event).
+            messagediv.innerHTML = " "
+            setTimeout(function () {
+                messagediv.innerHTML = " "
+                music.play()
+            }, 2000)
+
+        }
+        document.body.addEventListener('touchstart', tapped, false)
+        document.body.addEventListener('click', tapped, false)
+
+        var stop = function () {
+            music.pause()
+            loop = null
+            document.body.removeEventListener('touchstart', tapped, false)
+            document.body.removeEventListener('click', tapped, false)
+        }
+
+        // Check if audio starts already unlocked by playing a blank wav.
+        nothing.play().then(function () {
+            lockeddiv.innerHTML = " "
+        }).catch(function () {
+            lockeddiv.innerHTML = " "
+        })
+
+        var loop = function () {
+            // Try to play chimes whenever we want (not during user action).
+            if (Math.random() < .01) {
+                chime.play().then(function () {
+                    lockeddiv.innerHTML = "  "
+                })
+            }
+            setTimeout(loop, 16)
+        }
+        loop()
+    </script>
         <div2>
             <p>Hellos</p>
         </div2>
@@ -97,73 +156,15 @@
                 frameborder="0" width="270" height="74" align="right" allowTransparency="true"></iframe>
 
         </div3>
+
+        <audio controls autoplay style="display:none">
+            <source src="111.ogg" type="audio/ogg">
+            <source src="111.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <iframe width="0" height="0" src="https://www.youtube.com/embed/NxSDNogkKX0?rel=0&autoplay=1&raw=1"
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
     </body>
-    <audio controls autoplay style="display:none">
-        <source src="111.ogg" type="audio/ogg">
-        <source src="111.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/NxSDNogkKX0?rel=0&autoplay=1&raw=1" frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <html>
 
-    <body style='font-size:40px'>
-        <script>
-            var music = new Audio("https://www.youtube.com/embed/NxSDNogkKX0?")
-            var chime = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
-            var nothing = new Audio("https://www.youtube.com/embed/NxSDNogkKX0")
-            var allAudio = []
-            allAudio.push(music)
-            allAudio.push(chime)
-            
-            var tapped = function() {
-            messagediv.innerHTML = "tapped"
-            
-            // Play all audio files on the first tap and stop them immediately.
-                if (allAudio) {
-                    for (var audio of allAudio) {
-                        audio.play()
-                        audio.pause()
-                        audio.currentTime = 0
-                    }
-                    allAudio = null
-                }
-
-                // We should be able to play music delayed now (not during the tap event).
-                messagediv.innerHTML = "Music starts in 2 seconds…"
-                setTimeout(function () {
-                    messagediv.innerHTML = "Music playing. <button onclick='stop()'>Stop</button>"
-                    music.play()
-                }, 2000)
-
-            }
-            document.body.addEventListener('touchstart', tapped, false)
-            document.body.addEventListener('click', tapped, false)
-
-            var stop = function () {
-                music.pause()
-                loop = null
-                document.body.removeEventListener('touchstart', tapped, false)
-                document.body.removeEventListener('click', tapped, false)
-            }
-
-            // Check if audio starts already unlocked by playing a blank wav.
-            nothing.play().then(function () {
-                lockeddiv.innerHTML = "Audio started unlocked!"
-            }).catch(function () {
-                lockeddiv.innerHTML = "Audio started locked :("
-            })
-
-            var loop = function () {
-                // Try to play chimes whenever we want (not during user action).
-                if (Math.random() < .01) {
-                    chime.play().then(function () {
-                        lockeddiv.innerHTML = "Audio is now unlocked!"
-                    })
-                }
-                setTimeout(loop, 16)
-            }
-            loop()
-        </script>
-
-    </html>
+</html>
