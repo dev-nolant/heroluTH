@@ -2,7 +2,7 @@ from flask_restful import Resource
 
 todos = [
   {
-    "id": 'gk',
+    "id": 1,
     "item": "Hint: A=1\n",
     "status": "End Game",
       "CONF509363992933059": "5",
